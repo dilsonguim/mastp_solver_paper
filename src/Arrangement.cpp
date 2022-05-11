@@ -104,6 +104,15 @@ double FaceArea(Instance &instance,
     auto p = PointDifference(approximate_source, approximate_center);
     auto q = PointDifference(approximate_target, approximate_center);
     double costheta = Dot(p, q) / r2;
+
+    // Round-off errors can cause costheta to be outside [-1, 1],
+    // which can case acos(costheta) to evaluate to nan.
+    if (costheta > 1) {
+        costheta = 1.;
+    } else if (costheta < -1) {
+        costheta = -1;
+    }
+    
     double theta = acos(costheta);
 
     int face = he->face()->data();
@@ -117,6 +126,14 @@ double FaceArea(Instance &instance,
     double delta = approximate_center.first * qp.second -
                    approximate_center.second * qp.first;
     double line_integral = (theta * r2 + delta) / 2.;
+    if (isnan(line_integral)) {
+        cout << "theta: " << theta << endl;
+        cout << "r2: " << r2 << endl;
+        cout << "delta: " << delta << endl;
+        cout << "costheta: " << costheta << endl;
+        cout << "Dot(p, q): " << Dot(p, q) << endl;
+        cout << endl;
+    }
     area += line_integral;
 
     curr++;
