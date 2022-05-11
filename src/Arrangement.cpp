@@ -106,7 +106,7 @@ double FaceArea(Instance &instance,
     double costheta = Dot(p, q) / r2;
 
     // Round-off errors can cause costheta to be outside [-1, 1],
-    // which can case acos(costheta) to evaluate to nan.
+    // which can cause acos(costheta) to evaluate to nan.
     if (costheta > 1) {
         costheta = 1.;
     } else if (costheta < -1) {
