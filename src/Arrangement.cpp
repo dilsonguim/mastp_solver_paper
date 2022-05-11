@@ -126,14 +126,6 @@ double FaceArea(Instance &instance,
     double delta = approximate_center.first * qp.second -
                    approximate_center.second * qp.first;
     double line_integral = (theta * r2 + delta) / 2.;
-    if (isnan(line_integral)) {
-        cout << "theta: " << theta << endl;
-        cout << "r2: " << r2 << endl;
-        cout << "delta: " << delta << endl;
-        cout << "costheta: " << costheta << endl;
-        cout << "Dot(p, q): " << Dot(p, q) << endl;
-        cout << endl;
-    }
     area += line_integral;
 
     curr++;
